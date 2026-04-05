@@ -1,0 +1,35 @@
+name: Security Audit Bot
+on:
+  schedule:
+    # Ye har roz raat 9:30 PM IST par chalega
+    - cron: '0 16 * * *'
+  workflow_dispatch:
+
+jobs:
+  scan:
+    runs-on: ubuntu-latest
+    strategy:
+      max-parallel: 1
+      matrix:
+        repo: 
+          - Nikhil9367/Live-Weather-Tracker
+          - Nikhil9367/Email-Spam-Detection
+          - Nikhil9367/Automated-Building-Damage-Detection-and-Repair-Estimation
+    steps:
+      - uses: actions/checkout@v4
+      - name: Checkout Target
+        uses: actions/checkout@v4
+        with:
+          repository: ${{ matrix.repo }}
+          path: target_repo
+          token: ${{ secrets.GH_PAT }}
+      - name: Setup Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: '3.10'
+      - run: pip install PyGithub bandit
+      - name: Run Agent
+        env:
+          GH_PAT: ${{ secrets.GH_PAT }}
+          TARGET_REPO: ${{ matrix.repo }}
+        run: python scanner_agent.py
