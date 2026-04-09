@@ -16,7 +16,6 @@ jobs:
           - Nikhil9367/Email-Spam-Detection
           - Nikhil9367/Automated-Building-Damage-Detection-and-Repair-Estimation
           - Nikhil9367/Mood_journal_project
-          - Nikhil9367/Smart_News_fetcher_using_Flutter
           - Nikhil9367/Campus_Lost_and_Found
     steps:
       - uses: actions/checkout@v4
